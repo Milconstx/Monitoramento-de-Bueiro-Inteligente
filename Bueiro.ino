@@ -26,7 +26,7 @@ void setup() {
   pinMode(pinEcho, INPUT);
   digitalWrite(pinTrigger, LOW);
 
-  // Conecta no Wi-Fi
+  // Conectando no Wi-Fi
   WiFi.begin(ssid, password);
   Serial.print("Conectando ao Wi-Fi");
   while (WiFi.status() != WL_CONNECTED) {
@@ -37,21 +37,19 @@ void setup() {
   Serial.print("Conectado! IP: ");
   Serial.println(WiFi.localIP());
 
-  // Define a rota principal "/"
   server.on("/", []() {
     medirLixo(); // Atualiza o nível de lixo
 
-    // Define classe de cor conforme o nível de lixo
     String statusClass;
     if (nivelLixo < alturaBueiro * 0.5) {
-      statusClass = "status-green";   // até 50% cheio
+      statusClass = "status-green";   
     } else if (nivelLixo < alturaBueiro * 0.8) {
-      statusClass = "status-orange";  // entre 50% e 80%
+      statusClass = "status-orange";  
     } else {
-      statusClass = "status-red";     // acima de 80%
+      statusClass = "status-red";    
     }
 
-    // HTML estilizado
+    // HTML Para visualização
     String html = "<!DOCTYPE html><html lang='pt-BR'><head>"
                   "<meta charset='UTF-8'>"
                   "<meta http-equiv='refresh' content='10'>"
@@ -84,10 +82,9 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient(); // Mantém o servidor rodando
+  server.handleClient(); 
 }
 
-// Função que mede o lixo
 void medirLixo() {
   digitalWrite(pinTrigger, HIGH);
   delayMicroseconds(10);
